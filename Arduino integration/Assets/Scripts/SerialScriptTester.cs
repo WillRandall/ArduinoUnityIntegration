@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 using System.IO.Ports;
 public class SerialTesterScript : MonoBehaviour
 {
@@ -6,8 +7,32 @@ public class SerialTesterScript : MonoBehaviour
     public GameObject GreenColl;
     public GameObject YellowColl;
     public GameObject RedColl;
+    public GameObject MainCollider;
     SerialPort sp;
     float next_time; int ii = 0;
+
+
+
+    private void OnTriggerEnter(Collider playerCollision)
+    {
+        if (playerCollision == player)
+        {
+            if(MainCollider == GreenColl)
+            {
+
+            }else if (MainCollider == YellowColl)
+            {
+
+            }else if (MainCollider == RedColl)
+            {
+                
+            }
+        }
+    }
+
+
+
+
     // Use this for initialization
     void Start()
     {
@@ -28,12 +53,13 @@ public class SerialTesterScript : MonoBehaviour
             sp.Handshake = Handshake.None;
             if (sp.IsOpen) { print("Open"); }
         }
+
     }
     // Update is called once per frame
     void Update()
     {
          
-
+        
 
 
         if (Time.time > next_time)
@@ -52,4 +78,5 @@ public class SerialTesterScript : MonoBehaviour
             if (++ii > 9) ii = 0;
         }
     }
+   
 }
