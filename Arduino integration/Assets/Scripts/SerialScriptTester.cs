@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.IO.Ports;
-public class SerialTesterScript : MonoBehaviour
+public class SerialScriptTester : MonoBehaviour
 {
     public GameObject player;
     public GameObject GreenColl;
@@ -13,19 +13,23 @@ public class SerialTesterScript : MonoBehaviour
 
 
 
-    private void OnTriggerEnter(Collider playerCollision)
+     void OnTriggerEnter(Collider playerCollision)
     {
-        if (playerCollision == player)
+        //Debug.Log("something was hit");
+        if (playerCollision.gameObject == player)
         {
             if(MainCollider == GreenColl)
             {
-
+                Debug.Log("Green was hit");
+                OpenSerialPort(4);
             }else if (MainCollider == YellowColl)
             {
-
+                Debug.Log("Yellow was hit");
+                OpenSerialPort(6);
             }else if (MainCollider == RedColl)
             {
-                
+                Debug.Log("Red was hit");
+                OpenSerialPort(5);
             }
         }
     }
@@ -53,6 +57,7 @@ public class SerialTesterScript : MonoBehaviour
             sp.Handshake = Handshake.None;
             if (sp.IsOpen) { print("Open"); }
         }
+        
 
     }
     // Update is called once per frame
@@ -78,5 +83,20 @@ public class SerialTesterScript : MonoBehaviour
             if (++ii > 9) ii = 0;
         }
     }
-   
+   public void OpenSerialPort(int LightInt)
+   {
+        string the_com = "";
+        next_time = Time.time;
+
+        if (!sp.IsOpen)
+        {
+            print("Opening " + the_com + ", baud 9600");
+            sp.Open();
+            sp.ReadTimeout = 100;
+            sp.Handshake = Handshake.None;
+            if (sp.IsOpen) { print("Open"); }
+            if (sp.IsOpen) { print(LightInt); }
+        }
+
+    }
 }
